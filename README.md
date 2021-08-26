@@ -4,6 +4,8 @@ A project that involves the Hypersen HPS3D160 Lidar to collect pointcloud data a
 
 Side note: Hector slam doesnt work well with this settings...(positioning is off)
 
+Edit: Hector slam uses 2D laser scan images, while HPS3D is a 3D lidar...
+
 ## References
 
 - [How to configure Hector slam launch files to SLAM with no odometry](https://github.com/NickL77/RPLidar_Hector_SLAM)
