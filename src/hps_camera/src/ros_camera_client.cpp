@@ -52,9 +52,9 @@ void *User_Func(HPS3D_HandleTypeDef *handle, AsyncIObserver_t *event)
 					cloud.points.resize(cloud.width * cloud.height);
 					for (size_t i = 0; i < cloud.points.size (); ++i)
 					{
-							cloud.points[i].x  = event->MeasureData.point_cloud_data[0].point_data[i].x/1000.0;
-							cloud.points[i].y = event->MeasureData.point_cloud_data[0].point_data[i].y/1000.0;
-							cloud.points[i].z = event->MeasureData.point_cloud_data[0].point_data[i].z/1000.0;
+							cloud.points[i].x  = event->MeasureData.point_cloud_data->point_data[i].x/1000.0;
+							cloud.points[i].y = event->MeasureData.point_cloud_data->point_data[i].y/1000.0;
+							cloud.points[i].z = event->MeasureData.point_cloud_data->point_data[i].z/1000.0;
 					}					
 					//Convert the cloud to ROS message
 					pcl::toROSMsg(cloud, output);
