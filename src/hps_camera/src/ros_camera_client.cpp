@@ -58,7 +58,7 @@ void *User_Func(HPS3D_HandleTypeDef *handle, AsyncIObserver_t *event)
 					}					
 					//Convert the cloud to ROS message
 					pcl::toROSMsg(cloud, output);
-					output.header.frame_id = "hps";
+					output.header.frame_id = "laser";
 					//camera_pub.publish(output);	
 					//msg.distance_average = event->MeasureData.full_depth_data->distance_average;
 					//camera_pub.publish(msg);
