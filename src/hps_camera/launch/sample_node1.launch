@@ -17,9 +17,9 @@
             angle_min: 0.9075 # 76 degrees to rad
             angle_max: 2.2339 # M_PI/2
             angle_increment: 0.0087 # M_PI/360.0
-            scan_time: 0.3333
+            scan_time: 0.150266 # 0.333
             range_min: 0.15
-            range_max: 8.0 #7meter
+            range_max: 5.0 #7meter
             use_inf: true
             inf_epsilon: 1.0
 
@@ -39,6 +39,8 @@
     
     <!-- <node pkg="rviz" type="rviz" name="rviz"
     args="-d $(find hps_camera)/rvizsetup.rviz"/> -->
+    <node pkg="rviz" type="rviz" name="rviz"
+    args="-d $(find hps_camera)/rvizsetup.rviz"/>
     
  
 
