@@ -48,13 +48,13 @@ void *User_Func(HPS3D_HandleTypeDef *handle, AsyncIObserver_t *event)
 					cloud.width = event->MeasureData.point_cloud_data->width;
 					cloud.height = event->MeasureData.point_cloud_data->height;
 					// True if no points are invalid (e.g., have NaN or Inf values in any of their floating point fields).
-              		cloud.is_dense = false; 
+              		cloud.is_dense = true; 
 					cloud.points.resize(cloud.width * cloud.height);
 					for (size_t i = 0; i < cloud.points.size (); ++i)
 					{
-							cloud.points[i].x  = event->MeasureData.point_cloud_data->point_data[i].x/1000.0;
-							cloud.points[i].y = event->MeasureData.point_cloud_data->point_data[i].y/1000.0;
-							cloud.points[i].z = event->MeasureData.point_cloud_data->point_data[i].z/1000.0;
+							cloud.points[i].x  = event->MeasureData.point_cloud_data->point_data[i].x/16.0;
+							cloud.points[i].y = event->MeasureData.point_cloud_data->point_data[i].y/16.0;
+							cloud.points[i].z = event->MeasureData.point_cloud_data->point_data[i].z/16.0;
 					}					
 					//Convert the cloud to ROS message
 					pcl::toROSMsg(cloud, output);
@@ -282,6 +282,9 @@ int main(int argc, char **argv)
 	RET_StatusTypeDef ret = RET_OK;
 	//AsyncIObserver_t My_Observer;
 
+    // Prevent null values in computation by setting ceiling point
+    HPS3D_ConfigSpecialMeasurementValue (true,4000);
+
 	std::stringstream sclient_name;
 
 	//Install the signal
@@ -355,70 +358,10 @@ int main(int argc, char **argv)
         printf("Failed to set run mode!");
         return 0;
     }
-	//HPS3D_ConfigSpecialMeasurementValue (true,8000);
-
-	/*
-	int b = 0;
-	printf("select Transport type: 0:USB 1:Ethernet\n");
-	scanf("%d",&b);
-	if(b == 1)
-	{
-		HPS3D_SetEthernetServerInfo(&handle,(char *)"192.168.0.10",12345);	
-	}
-	else
-	{
-		dev_cnt = HPS3D_GetDeviceList((char *)"/dev/",(char *)"ttyACM",fileName);
-		handle.DeviceName = "/dev/ttyACM0";
-		//printf("test dev name %d", dev_cnt);
-	}
-	
-	do
-	{
-		//Device Connection
-		ret = HPS3D_Connect(&handle);
-		if(ret != RET_OK)
-		{
-			printf("Device open failed,ret = %d\n",ret);
-			break;
-		}
-		
-		//Device init
-		ret = HPS3D_ConfigInit(&handle);
-		if(RET_OK != ret)
-		{
-			printf("Initialization failed:%d\n", ret);
-			break;
-		}
-		printf("Initialization succeed\n");		
-		HPS3D_SetEdgeDetectionEnable(true); 
-		//set convert point cloud data enable		
-		HPS3D_SetOpticalEnable(&handle, true);
-		HPS3D_SetPointCloudEn(true);
-		
-		//Add observer one
-		My_Observer.AsyncEvent = ISubject_Event_DataRecvd;
-		My_Observer.NotifyEnable = true;
-		HPS3D_AddObserver(&User_Func, &handle, &My_Observer);		
-
-		//Set running mode
-		handle.RunMode = RUN_CONTINUOUS;
-		HPS3D_SetRunMode(&handle);
-		
-	}while(0);
-	*/
-	/*
-	if(ret != RET_OK)
-	{
-		//Remove device and disconnect
-		HPS3D_RemoveDevice(&handle);
-		printf("Initialization failed, Remove device\n");
-		return 0;
-	}
-	*/
 	
 	while(1)
 	{
-		//ros::spinOnce();
+		ros::spinOnce();
 		sleep(10);		
 	}
 		
