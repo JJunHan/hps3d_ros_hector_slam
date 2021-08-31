@@ -11,15 +11,14 @@
         <rosparam>
             target_frame: laser # Leave disabled to output scan in pointcloud frame
             transform_tolerance: 0.01
-            min_height: 0.0
-            max_height: 1.0
-
-            angle_min: -1.5708 #0.9075 # 76 degrees to rad
-            angle_max: 1.5708 #2.2339 # M_PI/2
+            min_height: -5.0
+            max_height: 5.0
+            angle_min: 0.0 #-1.5708 
+            angle_max: 3.0 #1.5708
             angle_increment: 0.0087 # M_PI/360.0
             scan_time: 0.333 #0.150266 
             range_min: 0.15
-            range_max: 4.0 
+            range_max: 7.0 
             use_inf: true
             inf_epsilon: 1.0
 
@@ -35,20 +34,21 @@
     <!-- Run HPS client-->
     <node pkg="hps_camera" name = "cam" type = "ros_camera_client" />
 
-    <!-- Run Octomap service-->
+
+    <!-- Run Octomap service
     <node pkg="octomap_server" type="octomap_server_node" name="octomap_server">
         <param name="resolution" value="0.05" />
 
-        <!-- fixed map frame -->
+       
         <param name="frame_id" type="string" value="laser" />
 	
 	    <param name="sensor_model/max_range" value="4.0" />
 
-        <!-- data source to integrate (PointCloud2) -->
+    
         <remap from="cloud_in" to="/testpic" />
 
     </node>
-
+-->
 
     <!-- Run rviz channel -->
     

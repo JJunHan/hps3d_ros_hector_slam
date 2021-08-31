@@ -48,13 +48,13 @@ void *User_Func(HPS3D_HandleTypeDef *handle, AsyncIObserver_t *event)
 					cloud.width = event->MeasureData.point_cloud_data->width;
 					cloud.height = event->MeasureData.point_cloud_data->height;
 					// True if no points are invalid (e.g., have NaN or Inf values in any of their floating point fields).
-              		cloud.is_dense = true; 
+              		cloud.is_dense = false; 
 					cloud.points.resize(cloud.width * cloud.height);
 					for (size_t i = 0; i < cloud.points.size (); ++i)
 					{
-							cloud.points[i].x  = event->MeasureData.point_cloud_data->point_data[i].x/16.0;
-							cloud.points[i].y = event->MeasureData.point_cloud_data->point_data[i].y/16.0;
-							cloud.points[i].z = event->MeasureData.point_cloud_data->point_data[i].z/16.0;
+							cloud.points[i].x  = event->MeasureData.point_cloud_data->point_data[i].x/850.0;
+							cloud.points[i].y = event->MeasureData.point_cloud_data->point_data[i].y/850.0;
+							cloud.points[i].z = event->MeasureData.point_cloud_data->point_data[i].z/850.0;
 					}					
 					//Convert the cloud to ROS message
 					pcl::toROSMsg(cloud, output);
@@ -283,7 +283,7 @@ int main(int argc, char **argv)
 	//AsyncIObserver_t My_Observer;
 
     // Prevent null values in computation by setting ceiling point
-    HPS3D_ConfigSpecialMeasurementValue (true,4000);
+    //HPS3D_ConfigSpecialMeasurementValue (true,4000);
 
 	std::stringstream sclient_name;
 

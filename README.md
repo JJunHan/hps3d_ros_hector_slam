@@ -2,8 +2,6 @@
 
 A project that involves the Hypersen HPS3D160 Lidar to collect pointcloud data and convert that into laserscan messages to enable hector slam to function.
 
-Side note: Hector slam doesnt work well with this settings...(positioning is off)
-
 ## References
 
 - [How to configure Hector slam launch files to SLAM with no odometry](https://github.com/NickL77/RPLidar_Hector_SLAM)
@@ -16,3 +14,9 @@ Side note: Hector slam doesnt work well with this settings...(positioning is off
 - pointcloud_to_laserscan
 - HPS3D sdk
 - Hector slam
+- Ubuntu 20.04 desktop
+- ROS Noetic
+
+## Sample
+
+![Hector rviz](src/hector_sample.png)
