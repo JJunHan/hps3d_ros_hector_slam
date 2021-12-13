@@ -1,6 +1,8 @@
 # hps3d_ros
 
-A project that involves the Hypersen HPS3D160 Lidar to collect pointcloud data and convert that into laserscan messages to enable hector slam to function.
+A project that involves the Hypersen HPS3D160 Lidar (no odometry) to collect pointcloud data and convert that into laserscan messages to enable hector slam to function. Also includes Octomapping to visualize the surrounding objects in 3D.
+
+Includes a static tf to transform baselink to laser to orientate the laserscan for hector slam.
 
 ## References
 
@@ -17,6 +19,40 @@ A project that involves the Hypersen HPS3D160 Lidar to collect pointcloud data a
 - Ubuntu 20.04 desktop
 - ROS Noetic
 
+```bash
+sudo apt install ros-noetic-hector-slam
+sudo apt install ros-noetic-octomap-mapping
+```
+
+## Execute
+
+Add the tutorial1.launch and mapping_default.launch file into the respective hector package.
+
+```bash
+roscd hector_slam_launch
+roscd hector_mapping
+```
+
+Ensure that you run the lidar node first.
+
+```bash
+cd ~/ws
+source devel/setup.bash
+roslaunch hps_camera sample_node1.launch
+```
+
+In a new terminal run
+
+```bash
+roslaunch hector_slam_launch tutorial1.launch
+```
+
 ## Sample
 
-![Hector rviz](src/hector_sample.png)
+Hector slam only.
+
+![Hector rviz](src/hector_video.gif)
+
+Hector slam with Octomap.
+
+![Hector & Octomap rviz](src/hector_octomap.gif)

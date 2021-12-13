@@ -4,17 +4,19 @@
 
 
     <!-- run pointcloud_to_laserscan node -->
+    <node pkg="tf" type="static_transform_publisher" name="base_to_laser_broadcaster" args="0 0 0 -1.57 0 -1.57 base_link laser 100"/>
+       
     <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
 
         <remap from="cloud_in" to="/testpic"/>
         <remap from="scan" to="/scan"/>
         <rosparam>
-            target_frame: laser # Leave disabled to output scan in pointcloud frame
+            target_frame: base_link # Leave disabled to output scan in pointcloud frame
             transform_tolerance: 0.01
-            min_height: -5.0
-            max_height: 5.0
-            angle_min: 0.0 #-1.5708 
-            angle_max: 3.0 #1.5708
+            min_height: -1
+            max_height: 2
+            angle_min: -3.14 #-1.5708 
+            angle_max: 3.14 #1.5708
             angle_increment: 0.0087 # M_PI/360.0
             scan_time: 0.333 #0.150266 
             range_min: 0.15
@@ -34,26 +36,19 @@
     <!-- Run HPS client-->
     <node pkg="hps_camera" name = "cam" type = "ros_camera_client" />
 
-
-    <!-- Run Octomap service
+    <!-- Run Octomap service -->
     <node pkg="octomap_server" type="octomap_server_node" name="octomap_server">
         <param name="resolution" value="0.05" />
 
-       
-        <param name="frame_id" type="string" value="laser" />
+        <param name="frame_id" type="string" value="map" />
 	
 	    <param name="sensor_model/max_range" value="4.0" />
 
-    
         <remap from="cloud_in" to="/testpic" />
 
     </node>
--->
 
     <!-- Run rviz channel -->
-    
-    <!-- <node pkg="rviz" type="rviz" name="rviz"
-    args="-d $(find hps_camera)/rvizsetup.rviz"/> -->
 
     <node pkg="rviz" type="rviz" name="rviz"
     args="-d $(find hps_camera)/rvizsetup.rviz"/>
